@@ -20,7 +20,11 @@ class RouteModel : public Model {
         float g_value = 0.0;
         bool visited = false;
         std::vector<Node*> neighbors;
-
+        
+				// Distance to current node from node.
+        float distance(Node other) const {
+					return std::sqrt((std::pow((x - other.x), 2) + std::pow((y - other.y), 2)));
+				}
 
       private:
         // Add private Node variables and methods here.
@@ -38,5 +42,4 @@ class RouteModel : public Model {
   private:
     // Add private RouteModel variables and methods here.
     std::vector<Node> m_Nodes;
-
 };
