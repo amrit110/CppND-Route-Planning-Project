@@ -13,10 +13,15 @@ class RouteModel : public Model {
     class Node : public Model::Node {
       public:
         // Add public Node variables and methods here.
-        
         Node(){}
         Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
-      
+        Node* parent = nullptr;
+        float h_value = std::numeric_limits<float>::max();
+        float g_value = 0.0;
+        bool visited = false;
+        std::vector<Node*> neighbors;
+
+
       private:
         // Add private Node variables and methods here.
         int index;
