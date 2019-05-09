@@ -32,6 +32,6 @@ void RoutePlanner::AStarSearch() {
     m_Model.path = ConstructFinalPath(this->end_node);
 }
 
-float CalculateHValue(const RouteModel::Node *node) {
-    return node->distance(*this->end_node);
+float RoutePlanner::CalculateHValue(const RouteModel::Node *node) {
+    return node->distance(*(this->end_node));
 }
