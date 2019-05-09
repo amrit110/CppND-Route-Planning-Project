@@ -21,7 +21,7 @@ class RouteModel : public Model {
         bool visited = false;
         std::vector<Node*> neighbors;
         
-        // Distance to current node from node.
+        // Distance to current node from other specified node.
         float distance(Node other) const {
           return std::sqrt((std::pow((x - other.x), 2) + std::pow((y - other.y), 2)));
         }
@@ -38,8 +38,15 @@ class RouteModel : public Model {
     std::vector<Node> &SNodes() {
       return m_Nodes;
     }
+    auto &GetNodeToRoadMap() {
+      return node_to_road;
+    }
 
   private:
     // Add private RouteModel variables and methods here.
     std::vector<Node> m_Nodes;
+    std::unordered_map<int, std::vector<const Model::Road*>> node_to_road;
+
+    // Create a map from node to roads.
+    void CreateNodeToRoadHashmap();
 };
