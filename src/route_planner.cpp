@@ -26,3 +26,12 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
     return path_found;
 }
+
+void RoutePlanner::AStarSearch() {
+    this->end_node->parent = this->start_node;
+    m_Model.path = ConstructFinalPath(this->end_node);
+}
+
+float CalculateHValue(const RouteModel::Node *node) {
+    return node->distance(*this->end_node);
+}
