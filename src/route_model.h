@@ -14,14 +14,14 @@ class RouteModel : public Model {
       public:
         // Add public Node variables and methods here.
         Node(){}
-        Node(int idx, RouteModel *search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
+        Node(int idx, RouteModel *search_model, Model::Node node) : index(idx), parent_model(search_model), Model::Node(node) {}
         Node *parent = nullptr;
         float h_value = std::numeric_limits<float>::max();
         float g_value = 0.0;
         bool visited = false;
         std::vector<Node*> neighbors;
         
-        // Distance to current node from other specified node.
+        // Distance to current node from other specified node (Euclidean distance).
         float distance(Node other) const {
           return std::sqrt((std::pow((x - other.x), 2) + std::pow((y - other.y), 2)));
         }
