@@ -32,6 +32,7 @@ class RouteModel : public Model {
         // Add private Node variables and methods here.
         int index;
         RouteModel *parent_model = nullptr;
+
         // Declare method to find closest neighbor.
         RouteModel::Node *FindNeighbor(std::vector<int> node_indices);
     };
@@ -45,6 +46,7 @@ class RouteModel : public Model {
     auto &GetNodeToRoadMap() {
       return node_to_road;
     }
+    
     // Method declaration to accept user inputs.
     RouteModel::Node &FindClosestNode(float x, float y);
 

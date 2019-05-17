@@ -4,10 +4,12 @@
 
 /* Create RouteModel Nodes. Uses the "this" pointer to get the Nodes
 from the parent Model and create RouteModel Nodes from them. */
+
 RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) {
     int node_idx = 0;
-    for(Model::Node node : this->Nodes()) {
-        this->m_Nodes.push_back(RouteModel::Node(node_idx, this, node));
+    std::vector<Model::Node> vector_of_nodes = this->Nodes();
+    for (int i = 0; i < vector_of_nodes.size(); i++) {
+        this->m_Nodes.push_back(RouteModel::Node(node_idx, this, vector_of_nodes[i]));
         node_idx++;
     }
     CreateNodeToRoadHashmap();
@@ -15,6 +17,7 @@ RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) {
 
 /* Create a hash table of Node index values to a vector of Road pointers 
 that those nodes belong to. */
+
 void RouteModel::CreateNodeToRoadHashmap() {
     for (const Model::Road &road : this->Roads()) {
         if (road.type != Model::Road::Type::Footway) {
@@ -29,6 +32,7 @@ void RouteModel::CreateNodeToRoadHashmap() {
 }
 
 /* Find the closest unvisited node from a vector of node indices. */
+
 RouteModel::Node *RouteModel::Node::FindNeighbor(std::vector<int> node_indices) {
     RouteModel::Node *closest_node = nullptr;
     RouteModel::Node node;
@@ -44,6 +48,7 @@ RouteModel::Node *RouteModel::Node::FindNeighbor(std::vector<int> node_indices) 
 }
 
 // Find closest neighbor along all possible roads (directions) that a node is associated with.
+
 void RouteModel::Node::FindNeighbors() {
     for (auto &road : this->parent_model->node_to_road[this->index]) {
         RouteModel::Node *node = this->FindNeighbor(this->parent_model->Ways()[road->way].nodes);
@@ -54,6 +59,7 @@ void RouteModel::Node::FindNeighbors() {
 }
 
 // Given a coordinate in the map, find the closest node so that search can start/end there.
+
 RouteModel::Node &RouteModel::FindClosestNode(float x, float y) {
     RouteModel::Node input;
     input.x = x;
